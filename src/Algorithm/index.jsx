@@ -1,5 +1,5 @@
 import React from 'react'
-import {c} from '../component/Text/TextManger';
+import Htag from '../component/Text/TextManger';
 import ReactHtmlParser from 'react-html-parser'
 import CarouselSlide from '../component/Slider/carousel'
 import Navbar from '../component/Navbar/navbar';
@@ -14,7 +14,7 @@ function LoadAll() {
 
     const demodata=[{
         id:"1",
-        name:"Ptag",
+        name:"Htag",
         type:"TextTag",
         styles:[{customstyle:'margin:100px;',fontsize:"20"}],
         data:[{text:"Hello World"}]
@@ -30,7 +30,7 @@ function LoadAll() {
 
     
     const e=React.createElement
-    const component={...c}
+    const component={"Hatg":Htag}
     
     const Load=()=>{
         return (

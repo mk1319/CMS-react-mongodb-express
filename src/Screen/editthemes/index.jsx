@@ -1,7 +1,10 @@
 import React,{useState,useEffect} from "react";
 import LoadAll,{Load} from './loadall';
 import styled from "styled-components";
-
+import Htag from '../../component/Text/TextManger';
+import ReactHtmlParser from 'react-html-parser';
+import CarouselSlide from '../../component/Slider/carousel';
+import Navbar from '../../component/Navbar/navbar';
 
 export const Container = styled.div`
     height:100vh;
@@ -39,7 +42,7 @@ export const Container = styled.div`
 
 var demodata=[{
   id:"1",
-  name:"Ptag",
+  name:"Htag",
   type:"TextTag",
   styles:[{customstyle:'margin:100px;',fontsize:"20"}],
   data:[{text:"Hello World"}]
@@ -56,24 +59,33 @@ export default function TheameEdit() {
 
   const [Id, setId] = useState("");
   const[update,setupdate]=useState(false)
+  const [Data,setData]=useState(demodata)
+  
+
 
 
   const setid=(id)=>{
     setId(id)
   }
 
-  useEffect(() => {
-    return () => {
-      
-    };
-  }, [update])
+  
+
+    
 
   function handleupdate(){
+    
+    //setData(demodata)
+    
     setupdate(()=>!update)
-    console.log("update",demodata)
+
+
   }
 
-  return (
+  const e=React.createElement
+  const component={"Htag":Htag}
+  
+
+  return (  
     <Container>
       <div className="header">
         <h1>Top Header</h1>
@@ -81,10 +93,29 @@ export default function TheameEdit() {
       </div>
       <div className="maincontainer">
           <div className="sidenavbar">
-               <Load id={Id} demodata={demodata} handleupdate={handleupdate}/>    
+               <Load id={Id} demodata={Data} handleupdate={handleupdate} />    
           </div>
           <div className="main">
-              <LoadAll setid={setid} demodata={demodata}/>
+              {/* <LoadAll setid={setid} demodata={demodata}/> */}
+             {/* <Navbar/>
+             <CarouselSlide/> */}
+
+            {
+            
+              Data.map((Data,index)=>
+                      <div onClick={()=>{setid(Data.id)}} key={index}>
+                         {
+                          <Htag styles={Data.styles} data={Data.data} />           
+                         //  e(
+                         //    Data.name,
+                         //    { styles: Data.styles, key: index, data: Data.data },
+                         //  )
+                        }
+
+                 </div>
+             )
+            }
+
           </div>
       </div>
     </Container>

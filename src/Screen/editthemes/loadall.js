@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {c} from '../../component/Text/TextManger';
+import Htag from '../../component/Text/TextManger';
 import ReactHtmlParser from 'react-html-parser';
 import CarouselSlide from '../../component/Slider/carousel';
 import Navbar from '../../component/Navbar/navbar';
@@ -17,35 +17,37 @@ const ShowInputFiled=({Styles,handleupdate})=>{
     const[sty,setsty]=useState(Styles!=undefined?Styles[0]:{})
     const [State, setState] = useState(false)
     const[Value,setValue]=useState("")
+   
 
-    const hadlechange=(id,res)=>{
+    
+
+
+    const hadlechange=(id,res,e)=>{
       
         setsty((prev)=>({...prev,color:res}));
         Styles[0]=sty
+
+        
+
         setTimeout(()=>{
-
-          handleupdate()
-
-        },5000) 
+            handleupdate()
+        },3000) 
     }
-  
+
+
+
   const Addfiled=(s,index)=>{
 
     switch (s) {
       case "color":  
-        //setValue((pre)=>(sty[s]))
-      
         return (
           <li key={index}>
             Color:&nbsp;
             <input
               type="color"
-              value={Value==""?sty[s]:Value}
-
+              value={sty[s]}
               onChange={(e) => {
-                console.log("Change",e.target.value,Value)
-               //setValue(()=>(e.target.value))
-                hadlechange("color", e.target.value);
+                hadlechange("color", e.target.value,e);
               }}
 
             />
@@ -120,7 +122,7 @@ function LoadAll({setid,demodata}) {
 
 
     const e=React.createElement
-    const component={...c}
+    const component=Htag
     
 
     
@@ -128,8 +130,8 @@ function LoadAll({setid,demodata}) {
 
     return (
         <>
-             <Navbar/>
-             <CarouselSlide/>
+             {/* <Navbar/>
+             <CarouselSlide/> */}
             {
                  Array.isArray(demodata)&&demodata.length? demodata.map((Data,index)=>
                             
@@ -139,7 +141,7 @@ function LoadAll({setid,demodata}) {
                             component[Data.name],
                              { styles: Data.styles, key: index, data: Data.data },
                             )
-                            }
+            }
                          </div>
                 ):<></>
             }
