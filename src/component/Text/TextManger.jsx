@@ -8,8 +8,11 @@ const H=styled.h1`
     background-color:${props=>props.Styles.backgroundcolor||"white"};
     text-align:${props=>props.Styles.textalign||"left"};
     font-size:${props=>props.Styles.fontsize||""}px;
-    ${props=>props.Styles.padding?`padding:${props.Styles.padding.top}px ${props.Styles.padding.right}px ${props.Styles.padding.bottom}px ${props.Styles.padding.left}px `
+    ${props=>props.Styles.padding?`padding:${props.Styles.padding.top}% ${props.Styles.padding.right}% ${props.Styles.padding.bottom}% ${props.Styles.padding.left}% `
     :"padding:0px 0px 0px 0px"};
+    ${props=>props.Styles.margin?`margin:${props.Styles.margin.top}% ${props.Styles.margin.right}% ${props.Styles.margin.bottom}% ${props.Styles.margin.left}% `
+    :"margin:0px 0px 0px 0px"};
+    ${props=>props.Styles.customstyle}
 `
 
 

@@ -44,16 +44,28 @@ var demodata=[{
   id:"1",
   name:"Htag",
   type:"TextTag",
-  styles:[{customstyle:'margin:100px;',fontsize:"20"}],
+  styles:[{customstyle:'margin:10px;',fontsize:20}],
   data:[{text:"Hello World"}]
 },
 {
   id:"2",
   name:"Htag",
   type:"TextTag",
-  styles:[{padding:{top:10,right:100,bottom:100,left:0},color:"#e66465",textalign:"center"}],
+  styles:[{margin:{top:10,right:10,bottom:10,left:0},color:"#e66465",textalign:"left",fontsize:10,backgroundcolor:"#e66465"}],
   data:[{text:"Hello World 2"}]
-}]
+},
+{
+  id:"3",
+  name:"Navbar",
+  type:"Navbar",
+  styles:[{width:100,height:130,color:"#e66465",backgroundcolor:"black"}],
+  data:[{
+    img:"https://images.unsplash.com/photo-1614788679832-7879205af178?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1955&q=80",
+    Text:"Hello World",
+    center:false
+  }]
+}
+]
 
 export default function TheameEdit() {
 
@@ -82,7 +94,7 @@ export default function TheameEdit() {
   }
 
   const e=React.createElement
-  const component={"Htag":Htag}
+  const component={"Htag":Htag,"CarouselSlide":CarouselSlide,"Navbar":Navbar}
   
 
   return (  
@@ -97,25 +109,22 @@ export default function TheameEdit() {
           </div>
           <div className="main">
               {/* <LoadAll setid={setid} demodata={demodata}/> */}
-             {/* <Navbar/>
-             <CarouselSlide/> */}
 
             {
             
               Data.map((Data,index)=>
                       <div onClick={()=>{setid(Data.id)}} key={index}>
                          {
-                          <Htag styles={Data.styles} data={Data.data} />           
-                         //  e(
-                         //    Data.name,
-                         //    { styles: Data.styles, key: index, data: Data.data },
-                         //  )
+                          // <Htag styles={Data.styles} data={Data.data} />           
+                          e(
+                            component[Data.name],
+                            { styles: Data.styles, key: index, data: Data.data },
+                          )
                         }
 
                  </div>
              )
             }
-
           </div>
       </div>
     </Container>
