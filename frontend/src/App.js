@@ -11,7 +11,44 @@ import {
   useLocation,
   withRouter,
 } from "react-router-dom";
-import Home from './Screen/home'
+import Home from './Screen/home';
+import jwt from 'jwt-simple';
+
+
+const checktoken=()=>{
+  if(localStorage.getItem("UserLogin")){
+        return true
+    }
+  return false
+}
+
+const autent={
+    isLogin:checktoken(),
+  
+    authenticate(cb)
+    {
+        this.isLogin=true
+        setTimeout(cb,100)
+    },
+    singout(cb)
+    {
+      this.isLogin=false
+      localStorage.clear()
+      setTimeout(cb,100)
+    }
+}
+
+const ProtectedRouter=({component:Component,...rest})=>(
+  <Route {...rest} render={(props)=>(
+    autent.isLogin===true?<Component  {...props}/>:<Redirect to="/" />
+  )}/>)
+   
+
+const Notfound=()=>{
+  return(
+    <h1>404 NOT FOUND.</h1>
+  )
+}
 
 
 function App() {
@@ -19,9 +56,10 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={Home}/>
-        <Route path="/load" exact component={LoadAll}/>
-        <Route path="/Discription" exact component={Information}/>
-        <Route path="/Dashboard" exact component={TheameEdit}/>
+        <Route path="/web/:name" exact component={LoadAll}/>
+        <ProtectedRouter path="/Discription" exact component={Information}/>
+        <ProtectedRouter path="/Dashboard" exact component={TheameEdit}/>
+        <Route  component={Notfound}/>
       </Switch>
     </BrowserRouter>
   );
@@ -30,3 +68,4 @@ function App() {
 
 
 export default App;
+export {autent};

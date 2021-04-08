@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {Form} from '../Style/index'
+import {Form} from '../Style/index';
+import axios from 'axios';
+import jwt from "jwt-simple";
+import {autent} from '../App'
 
 const Container = styled.div`
   div.text {
@@ -49,9 +52,84 @@ export default function Home() {
     }));
   }
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
+    if(visible)
+    {
+      axios.post('http://localhost:5000/access/login',{
+        email:values.email,
+        password:values.password
+      })
+      .then((res)=>{
+
+        if(res.data.result)
+        {
+          localStorage.clear();
+          
+          setValues((preState)=>({...preState,msg:res.data.message,email:"",password:""}))
+
+          localStorage.setItem(
+            "UserLogin",
+            jwt.encode(res.data,"WEB_X")
+          );
+          
+          autent.authenticate();
+            
+            if(res.data.createdweb)
+            {
+              window.location.href="http://localhost:3000/Dashboard"
+            }
+            else{
+              window.location.href="http://localhost:3000/Discription"
+            }
+          
+          
+        }
+        else{
+
+          setValues((preState)=>({...preState,msg:res.data.message}))
+
+        }
+
+
+      })
+    }
+    else
+    {
+      axios.post('http://localhost:5000/access/register',{
+        email:values.email,
+        password:values.password,
+        name:values.name,
+        discription:values.discription
+      })
+      .then((res)=>{
+
+          console.log(res.data)
+        if(res.data.result)
+        {
+          localStorage.clear();
+          
+          setValues((preState)=>({...preState,msg:res.data.message,email:"",password:""}))
+
+          localStorage.setItem(
+            "UserLogin",
+            jwt.encode(res.data,"WEB_X")
+          );
+          
+          autent.authenticate();
+
+          setTimeout(()=>{
+            window.location.href="http://localhost:3000/Discription"
+          },500)  
+            
+        }
+        else{
+          setValues((preState)=>({...preState,msg:res.data.message}))
+
+        }
+      })
+    }
   };
 
   return (
@@ -74,7 +152,7 @@ export default function Home() {
               className="form"
               onSubmit={(e) => handleSubmit(e)}
             >
-              <h2 style={{ color: "#22b3b8" }}>{values.msg}</h2>
+              <h4 style={{ color: "#d60b0b" }}>{values.msg}</h4>
               
               {!visible?<input
                 required

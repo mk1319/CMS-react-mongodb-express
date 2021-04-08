@@ -1,6 +1,8 @@
 const express=require('express');
 const mongoose=require('mongoose');
+const cors=require('cors')
 const bodyparser=require('body-parser').json();
+const access=require('./data/access');
 require('dotenv/config');
 const app=express();
 /*
@@ -12,16 +14,14 @@ discription
 
 app.use(bodyparser)
 
+app.use(cors())
+
 mongoose.connect(process.env.DB_CONNECT,{
     useNewUrlParser:true,
     useUnifiedTopology:true
-})
+},()=>console.log("connected"))
 
-mongoose.connection.on("connected",()=>{
-    console.log("connected")
-}).on("error",(err)=>{
-    console.log("error",err)
-})
+app.use('/access',access)
 
 
 app.get('/',(req,res)=>{

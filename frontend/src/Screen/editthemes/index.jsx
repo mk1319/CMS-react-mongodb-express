@@ -1,16 +1,20 @@
 import React,{useState,useEffect} from "react";
 import LoadAll,{Load} from './loadall';
 import styled from "styled-components";
+import {autent} from '../../App';
 import Htag from '../../component/Text/TextManger';
 import ReactHtmlParser from 'react-html-parser';
 import CarouselSlide from '../../component/Slider/carousel';
 import Navbar from '../../component/Navbar/navbar';
+import jwt from 'jwt-simple';
+import axios from 'axios';
 
 export const Container = styled.div`
     height:100vh;
     .header{
         position:relative;
         display:flex;
+        justify-content:space-between;
         padding:20px;
         height:10vh;
     }
@@ -22,13 +26,13 @@ export const Container = styled.div`
     .sidenavbar{
             display:flex;
             flex-direction:column;
+            justify-content:space-between;
             border:1px solid blue;
             width:20%;
             overflow:hidden;
             overflow-y:scroll;
             scroll-behavior:smooth;
     }
-
     .main{
             display:flex;
             flex-direction:column;
@@ -37,6 +41,15 @@ export const Container = styled.div`
             overflow:hidden;
             overflow-y:scroll;
             scroll-behavior:smooth;
+    }
+    li{
+      border:1px solid #1b1c1d;
+      background-color:#ebeff0;
+      margin:2px;
+    }
+    li:hover{
+
+        background-color:#ccd2d3;
     }
 `;
 
@@ -81,7 +94,10 @@ var demodata=[
 
 export default function TheameEdit() {
 
+  
+
   const [Id, setId] = useState("");
+  const [userid,setuserid]=useState("")
   const[update,setupdate]=useState(false)
   const [Data,setData]=useState(demodata)
   
@@ -89,10 +105,38 @@ export default function TheameEdit() {
     setId(id)
   }
 
-  function handleupdate(){    
-    //setData(demodata)
-    setupdate(()=>!update)
+  useEffect(()=>{
 
+    setuserid(
+      jwt.decode(localStorage.getItem('UserLogin'),"WEB_X").id
+    )
+    Data.map((data)=>{
+      //typeof JSON.stringify(data)
+      //jwt.decode(localStorage.getItem('UserLogin'),"WEB_X").id
+    })
+  },[])
+
+
+
+  function handleupdate(){    
+    setupdate(()=>!update)
+  }
+
+  function UpdateWebApp()
+  {
+    let Datalist=[]
+    
+    Data.map((d)=>{
+          Datalist.push(JSON.stringify(d))
+    })
+    
+    axios.post('http://localhost:5000/access/Updateapp',{
+      id:userid,
+      datalist:Datalist
+    })
+    .then((res)=>{
+        console.log(res.data)
+    })
 
   }
 
@@ -103,27 +147,38 @@ export default function TheameEdit() {
   return (  
     <Container>
       <div className="header">
-        <h1>Top Header</h1>
-        <h1>Top Header</h1>
+
+        <div>
+          <h3>WebName</h3>
+        </div>
+        <div>
+          <h5>Add More Component<button>Add</button></h5>
+        </div>
+        <div>
+          <button onClick={()=>{UpdateWebApp()}}>Save</button>
+        </div>
+
       </div>
       <div className="maincontainer">
           <div className="sidenavbar">
-               <Load id={Id} demodata={Data} handleupdate={handleupdate} />    
+              <div>
+                <Load id={Id} demodata={Data} handleupdate={handleupdate} />
+              </div>
+              <li onClick={()=>{
+                autent.singout()
+                window.location.href="http://localhost:3000/"
+              }}>Signout</li>
           </div>
           <div className="main">
-              {/* <LoadAll setid={setid} demodata={demodata}/> */}
-
             {
               Data.map((Data,index)=>
                       <div onClick={()=>{setid(Data.id)}} key={index}>
-                         {
-                          // <Htag styles={Data.styles} data={Data.data} />           
+                         {        
                           e(
                             component[Data.name],
                             { styles: Data.styles, key: index, data: Data.data },
                           )
                         }
-
                  </div>
              )
             }

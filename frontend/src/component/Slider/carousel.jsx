@@ -41,10 +41,6 @@ const CarouselSlide = ({styles,data,controls}) => {
 
   const [control, setcontrol] = useState(controls==undefined?{indicator:1,arrow:0}:controls)
   
-  
-  console.log(Style)
-
-
   return (
       <Carousel
         Styles={Style}
