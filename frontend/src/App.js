@@ -2,6 +2,7 @@ import React from 'react';
 import LoadAll from './Algorithm';
 import Information from './Screen/information';
 import TheameEdit from './Screen/editthemes/index';
+import AllComponent from './Algorithm/AllComponent';
 
 import {
   BrowserRouter,
@@ -57,6 +58,7 @@ function App() {
       <Switch>
         <Route path="/" exact component={Home}/>
         <Route path="/web/:name" exact component={LoadAll}/>
+        <Route path="/AllComponent" exact component={AllComponent}/>
         <ProtectedRouter path="/Discription" exact component={Information}/>
         <ProtectedRouter path="/Dashboard" exact component={TheameEdit}/>
         <Route  component={Notfound}/>

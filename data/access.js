@@ -132,9 +132,57 @@ router.post('/Updateapp',(req,res)=>{
 })
 
 
+
 router.post('/DisplayApp',(req,res)=>{
     
     webname.find({webname:req.body.name},(err,re)=>{
+        if(!err)
+        {   
+            let data=[]
+            if(re.length)
+            {
+                data=re[0].listid
+            }
+            
+            res.send({message:"Website Updated!",result:true,re:data})
+        }
+        else
+        {
+            res.send({message:"Try Again After Sometime!",result:false})
+        }
+    })
+    .catch((err)=>{
+            res.send(err)
+    })
+})
+
+router.post('/DisplayApp',(req,res)=>{
+    
+    webname.find({webname:req.body.name},(err,re)=>{
+        if(!err)
+        {   
+            let data=[]
+            if(re.length)
+            {
+                data=re[0].listid
+            }
+            
+            res.send({message:"Website Updated!",result:true,re:data})
+        }
+        else
+        {
+            res.send({message:"Try Again After Sometime!",result:false})
+        }
+    })
+    .catch((err)=>{
+            res.send(err)
+    })
+})
+
+
+router.post('/dashboardweb',(req,res)=>{
+    
+    webname.find({userid:req.body.id},(err,re)=>{
         if(!err)
         {   
             let data=[]
