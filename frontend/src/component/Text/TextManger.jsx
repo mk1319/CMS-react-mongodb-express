@@ -18,11 +18,11 @@ const H=styled.h1`
 
 function Htag({styles,data}){
 
-    const Style=styles[0]==undefined?{}:styles[0]
-    const Data=data[0]==undefined?{}:data[0];
+    const Style=styles[0]==undefined||!styles.length?{}:styles[0]
+    const Data=data[0]==undefined||!data.length?{h1:"Hello World!"}:data[0];
 
     return (
-        <H Styles={Style}>{Data.text}</H>
+        <H Styles={Style}>{Data.h1}</H>
     )
 }
 

@@ -3,6 +3,11 @@ import styled from 'styled-components';
 
 const Carousel=styled.div`
   height:${props=>`${props.Styles.height}vh` ||"80vh"};
+  ${props=>props.Styles.padding?`padding:${props.Styles.padding.top}% ${props.Styles.padding.right}% ${props.Styles.padding.bottom}% ${props.Styles.padding.left}% `
+    :"padding:0px 0px 0px 0px"};
+    ${props=>props.Styles.margin?`margin:${props.Styles.margin.top}% ${props.Styles.margin.right}% ${props.Styles.margin.bottom}% ${props.Styles.margin.left}% `
+    :"margin:0px 0px 0px 0px"};
+  
   img{
     width:100%;
     height:${props=>`${props.Styles.height}vh`||"80vh"};
@@ -27,19 +32,20 @@ const Caption=styled.div`
 
 const CarouselSlide = ({styles,data,controls}) => {
 
-  const Style=styles==undefined?{height:"100vh"}:styles[0];
-  
-  const Data= data == undefined
+  const Style=styles==undefined||!styles.length?{height:"80"}:styles[0];
+
+
+  const Data= data == undefined||!data.length
       ? [
           {
-            img:"https://images.unsplash.com/photo-1609953398453-c3fc0a7be8e1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80",
+            image:"https://images.unsplash.com/photo-1609953398453-c3fc0a7be8e1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80",
             title:"Hello world",
             subtitle:"subtitle"
           },
         ]
       : data
 
-  const [control, setcontrol] = useState(controls==undefined?{indicator:1,arrow:0}:controls)
+  const [control, setcontrol] = useState(controls==undefined||!control.length?{indicator:1,arrow:0}:controls)
   
   return (
       <Carousel
@@ -70,7 +76,7 @@ const CarouselSlide = ({styles,data,controls}) => {
 
           <div className={`${index==0?"carousel-item active":"carousel-item"}`} key={index}>
             <img
-              src={datas.img}
+              src={datas.image}
             />
             <Caption className="carousel-caption" Styles={Style}>
               <h2>{datas.title}</h2>

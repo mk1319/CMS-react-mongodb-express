@@ -3,7 +3,8 @@ import LoadAll,{Load} from './loadall';
 import styled from "styled-components";
 import {autent} from '../../App';
 import Htag from '../../component/Text/TextManger';
-import ReactHtmlParser from 'react-html-parser';
+import Youtube,{YoutubeFlex} from '../../component/Moving/youtube'
+import ImageFlex from '../../component/Moving/image';
 import CarouselSlide from '../../component/Slider/carousel';
 import Navbar from '../../component/Navbar/navbar';
 import jwt from 'jwt-simple';
@@ -53,15 +54,7 @@ export const Container = styled.div`
     }
 `;
 
-var demodata=[
-{
-  id:"1",
-  name:"Htag",
-  type:"TextTag",
-  styles:[{customstyle:'margin:10px;',fontsize:20}],
-  data:[{text:"Hello World"}]
-}
-]
+
 
 export default function TheameEdit() {
 
@@ -70,7 +63,7 @@ export default function TheameEdit() {
   const [Id, setId] = useState("");
   const [userid,setuserid]=useState("")
   const[update,setupdate]=useState(false)
-  const [Data,setData]=useState(demodata)
+  const [Data,setData]=useState([])
   const [message, setmessage] = useState("")
   const [loadfinish, setloadfinish] = useState(false)
   
@@ -105,7 +98,7 @@ export default function TheameEdit() {
 
     if(!Data.length)
     {
-      setData(demodata)
+      setData([])
     }
   
   },[])
@@ -139,7 +132,8 @@ export default function TheameEdit() {
   }
 
   const e=React.createElement
-  const component={"Htag":Htag,"CarouselSlide":CarouselSlide,"Navbar":Navbar}
+  const component={"Htag":Htag,"CarouselSlide":CarouselSlide,"Navbar":Navbar,"Youtube":Youtube,"YoutubeFlex":YoutubeFlex,"ImageFlex":ImageFlex}
+
   
 
   return (  
@@ -181,6 +175,7 @@ export default function TheameEdit() {
                  </div>
              )
             }
+            {!Data.length&&<h3 className="text-center">Page Has No Data Add Component</h3>}
           </div>
       </div>
     </Container>

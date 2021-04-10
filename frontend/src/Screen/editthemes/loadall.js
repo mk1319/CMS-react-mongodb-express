@@ -13,10 +13,16 @@ const ShowInputFiled = ({ Styles, handleupdate }) => {
 
 
   const hadlechange = (id, res) => {
+
     
     if(id=="padding" || id=="margin")
     {
       setsty((prev) => ({ ...prev, [id]:{...sty[id],[res.name]:res.value} }));
+      Styles[0] = sty;
+    }
+    else if(id=="end")
+    {
+      setsty(sty)
       Styles[0] = sty;
     }
     else
@@ -27,6 +33,7 @@ const ShowInputFiled = ({ Styles, handleupdate }) => {
   };
 
   const Addfiled = (s, index) => {
+
     switch (s) {
       case "color":
         return (
@@ -204,20 +211,6 @@ const ShowInputFiled = ({ Styles, handleupdate }) => {
             />
           </li>
         );
-      // case "customstyle":
-      //   return (
-      //     <li>
-      //       Custom-Style &nbsp;
-      //       <br />
-      //       <textarea
-      //         value={sty[s]}
-      //         min="10"
-      //         onChange={(e) => {
-      //           hadlechange("customstyle", e.target.value);
-      //         }}
-      //       />
-      //     </li>
-      //   );
       default:
         return "";
     }
@@ -225,15 +218,17 @@ const ShowInputFiled = ({ Styles, handleupdate }) => {
   
   function submit()
   {
-    hadlechange("customstyle","")     
+    hadlechange("end","")     
     handleupdate()
   }
 
-
+  
   return (
     <>
       <form>
+        
         {Object.keys(sty).map((data, index) => Addfiled(data, index))}
+
         <li>
             Custom-Style &nbsp;
             <br />
@@ -251,20 +246,150 @@ const ShowInputFiled = ({ Styles, handleupdate }) => {
   );
 };
 
+
+
+const ShowDataInputFiled = ({ Data, handleupdate }) => {
+
+  const [data, setdata] = useState(Data != undefined ? Data[0] : {});
+  
+
+
+  const hadlechange = (id, res) => {
+
+    if(id=="end")
+    {
+      setdata(data)
+      Data[0] = data;
+    }
+    
+      setdata((prev) => ({ ...prev, [id]: res }));
+      Data[0] = data;
+  
+  };
+
+  const Addfiled = (s, index) => {
+
+    switch (s) {
+      case "title":
+        return (
+          <li key={index}>
+            Title:&nbsp;
+            <input
+              type="text"
+              value={data[s]}
+              onChange={(e) => {
+                hadlechange("title", e.target.value);
+              }}
+            />
+          </li>
+        );
+      case "subtitle":
+        return (
+          <li key={index}>
+            Subtitle:&nbsp;
+            <input
+              type="text"
+              value={data[s]}
+              onChange={(e) => {
+                hadlechange("subtitle", e.target.value);
+              }}
+            />
+          </li>
+        );
+      case "h1":
+        return (
+          <li key={index}>
+            Heading h1:&nbsp;
+            <input
+              type="text"
+              value={data[s]}
+              onChange={(e) => {
+                hadlechange("h1", e.target.value);
+              }}
+            />
+          </li>
+        );
+      case "p":
+        return (
+          <li key={index}>
+            Text:&nbsp;
+            <input
+              type="text"
+              value={data[s]}
+              onChange={(e) => {
+                hadlechange("p", e.target.value);
+              }}
+            />
+          </li>
+        );
+      case "image":
+        return (
+          <li key={index}>
+            Text:&nbsp;
+            <input
+              type="text"
+              value={data[s]}
+              onChange={(e) => {
+                hadlechange("image", e.target.value);
+              }}
+            />
+          </li>
+        );
+        case "link":
+        return (
+          <li key={index}>
+            Link:&nbsp;
+            <input
+              type="text"
+              value={data[s]}
+              onChange={(e) => {
+                hadlechange("link", e.target.value);
+              }}
+            />
+          </li>
+        );
+      default:
+        return "";
+    }
+  };
+  
+  function submit()
+  {
+    hadlechange("end",)     
+    handleupdate()
+  }
+
+  
+  return (
+    <>
+      <form>
+        
+        {Object.keys(data).map((data, index) => Addfiled(data, index))}
+
+        <button style={{backgroundColor:'#db250d',margin:5,color:'white'}} onClick={()=>submit()}>Save Changes</button>
+      </form>
+    </>
+  );
+};
+
 export const Load = ({ id, demodata, handleupdate }) => {
 
-  const [Styles, setStyle] = useState({});
+  const [RanderData, setRanderData] = useState({});
   const [Id, setId] = useState(id);
   const[layout,Setlayout]=useState(true)
-  const [isstyle, setisstyle] = useState(true)
+  const [isstyle, setisstyle] = useState(false)
+  const [isdata, setisdata] = useState(false)
+
 
   useEffect(() => {
+    
     if (Id != "") {
-      setStyle(() => {
+      setRanderData(() => {
         let data = demodata.filter((data) => data.id == Id);
         return data[0];
       });
     }
+
   }, [Id]);
 
   const Taglist = () => {
@@ -285,6 +410,7 @@ export const Load = ({ id, demodata, handleupdate }) => {
 
     }
 
+  
 
 
     return (
@@ -325,14 +451,16 @@ export const Load = ({ id, demodata, handleupdate }) => {
        <> 
         <i className="fa fa-arrow-left" style={{color:"gray",fontSize:"20px"}} onClick={()=>{Setlayout(!layout)}}></i>
         
-        <li className="btn" onClick={()=>setisstyle(true)}>Edit Style</li>
+        <li className="btn" onClick={()=>setisstyle(!isstyle)}>Edit Style</li>
         <div style={{display:!isstyle?"none":""}}>
-          <ShowInputFiled Styles={Styles.styles} handleupdate={handleupdate}/>
+          <ShowInputFiled Styles={RanderData.styles} handleupdate={handleupdate}/>
         </div>
-        <li className="btn" onClick={()=>setisstyle(false)}>Edit Data</li>
-        <div style={{display:isstyle?"none":""}}>
-          <ShowInputFiled Styles={Styles.styles} handleupdate={handleupdate}/>
+
+        <li className="btn" onClick={()=>setisdata(!isdata)}>Edit Data</li>
+        <div style={{display:!isdata?"none":""}}>
+          <ShowDataInputFiled Data={RanderData.data} handleupdate={handleupdate}/>
         </div>
+        
         </>
       }    
       </ul>

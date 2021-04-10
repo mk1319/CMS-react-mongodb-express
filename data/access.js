@@ -5,10 +5,7 @@ const webname=require('./module/webname');
 
 router.get('/',(req,res)=>{
     webname.find({userid:"606de2f6a970be4e18088d9e"},(err,result)=>{
-
         res.send(result)
-
-        // res.send("hello world!")
     })
 })
 
@@ -44,7 +41,6 @@ router.post('/register',(req,res)=>{
     })
 })
 
-
 router.post('/login',(req,res)=>{
 
     Login.find({email:req.body.email},(err,result)=>{
@@ -71,7 +67,6 @@ router.post('/login',(req,res)=>{
 
     })
 })
-
 
 router.get('/check/:query',(req,res)=>{
 
@@ -112,7 +107,6 @@ router.post('/registerwebname',(req,res)=>{
 
 })
 
-
 router.post('/Updateapp',(req,res)=>{
     
     webname.findOneAndUpdate({userid:req.body.id},{listid:req.body.datalist},(err,re)=>{
@@ -131,8 +125,6 @@ router.post('/Updateapp',(req,res)=>{
     })
 })
 
-
-
 router.post('/DisplayApp',(req,res)=>{
     
     webname.find({webname:req.body.name},(err,re)=>{
@@ -178,7 +170,6 @@ router.post('/DisplayApp',(req,res)=>{
             res.send(err)
     })
 })
-
 
 router.post('/dashboardweb',(req,res)=>{
     
@@ -191,7 +182,35 @@ router.post('/dashboardweb',(req,res)=>{
                 data=re[0].listid
             }
             
-            res.send({message:"Website Updated!",result:true,re:data})
+            res.send({message:"Data display!",result:true,re:data})
+        }
+        else
+        {
+            res.send({message:"Try Again After Sometime!",result:false})
+        }
+    })
+    .catch((err)=>{
+            res.send(err)
+    })
+})
+
+
+router.post('/addcomponent',(req,res)=>{
+    
+    webname.find({userid:req.body.id},(err,re)=>{
+        if(!err)
+        {   
+            let data=[]
+            if(re.length)
+            {
+                data=re[0].listid
+            }
+
+            data.push(req.body.data)
+
+          webname.findOneAndUpdate({userid:req.body.id},{listid:data},(err,re)=>{})
+            
+            res.send({message:"Component Added!",result:true,re:data})
         }
         else
         {
