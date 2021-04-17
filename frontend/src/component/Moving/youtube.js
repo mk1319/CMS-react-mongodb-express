@@ -15,9 +15,7 @@ export default function Youtube({styles,data}) {
               },
             ][0]
             : data[0]
-            
-
-            console.log(Style.width)
+        
 
   return (
     <div className="container" style={{display:'flex',justifyContent:'center',marginTop:15}}>

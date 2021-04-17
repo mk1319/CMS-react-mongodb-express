@@ -141,7 +141,7 @@ export default function TheameEdit() {
       <div className="header">
 
         <div>
-          <h3>WebName</h3>
+          <h3>Webex</h3>
         </div>
         <div>
           <button onClick={()=>window.location.href="http://localhost:3000/AllComponent"}>Add Component</button>

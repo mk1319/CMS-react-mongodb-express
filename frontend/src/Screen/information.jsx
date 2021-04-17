@@ -90,7 +90,7 @@ export default function Information() {
     <Container>
       <div>
         <p>
-          Register your domain:- <p style={{color:'blue'}}>http://localhost:3000/{"{YOUR_DOMAIN_HERE}"}</p>
+          Register your domain:- <p style={{color:'blue'}}>http://localhost:3000/web/{"{YOUR_DOMAIN_HERE}"}</p>
         </p>
         <Form>
           <form autoComplete="off" className="form" onSubmit={(e)=>{e.preventDefault()}}>

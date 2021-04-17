@@ -18,7 +18,7 @@ export default function ImageFlex({styles,data}) {
               console.log(Style.width)
   
     return (
-      <div className="container" style={{display:'flex',justifyContent:'center'}}>
+      <div className="container" style={{display:'flex',justifyContent:'center',marginTop:5}}>
           <img src={Data.image} height={`${Style.height?Style.height:"100"}`} style={{flex:2,border:"2.5px solid gray"}} width={`${Style.width?Style.width:"100"}`}/>
             <div style={{flex:2,display:'flex',flexDirection:'column',marginLeft:40}}>
                 <h1>{Data.title}</h1>

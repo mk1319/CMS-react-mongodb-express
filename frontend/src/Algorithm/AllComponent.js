@@ -13,7 +13,7 @@ var demodata=[
       id:uuid(),
       name:"Htag",
       type:"TextTag",
-      styles:[{color:"black",backgroundcolor:"white",textalign:"",fontsize:"",padding:[0,0,0,0],margin:[0,0,0,0]}],
+      styles:[{color:"black",backgroundcolor:"white",textalign:"",fontsize:"",padding:{top:0,bottom:0,left:0,rigth:0},margin:{top:0,bottom:0,left:0,rigth:0}}],
       data:[{h1:"Hello World!"}]
     },
     {

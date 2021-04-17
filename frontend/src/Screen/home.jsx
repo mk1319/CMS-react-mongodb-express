@@ -99,30 +99,21 @@ export default function Home() {
     {
       axios.post('http://localhost:5000/access/register',{
         email:values.email,
-        password:values.password,
         name:values.name,
         discription:values.discription
       })
       .then((res)=>{
 
-          console.log(res.data)
         if(res.data.result)
         {
           localStorage.clear();
           
-          setValues((preState)=>({...preState,msg:res.data.message,email:"",password:""}))
-
-          localStorage.setItem(
-            "UserLogin",
-            jwt.encode(res.data,"WEB_X")
-          );
-          
-          autent.authenticate();
+          setValues((preState)=>({...preState,msg:res.data.message,email:"",name:"",discription:""}))
 
           setTimeout(()=>{
-            window.location.href="http://localhost:3000/Discription"
-          },500)  
-            
+            window.location.href="http://localhost:3000/"
+          },300)  
+
         }
         else{
           setValues((preState)=>({...preState,msg:res.data.message}))
@@ -171,14 +162,14 @@ export default function Home() {
                 name="email"
                 onChange={(e) => handleChange(e)}
               />
-              <input
+              {visible?<input
                 required
                 type="password"
                 value={values.password}
                 placeholder="Password"
                 name="password"
                 onChange={(e) => handleChange(e)}
-              />
+              />:<></>}
 
             {!visible?<textarea
                 required

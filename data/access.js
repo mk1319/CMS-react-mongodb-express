@@ -2,6 +2,21 @@ const express=require('express');
 const Login=require('./module/schema');
 const router=express.Router();
 const webname=require('./module/webname');
+const uuid=require("uniqid")
+
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+    host: "educationmandal.com",
+    port: 465,
+    secure: true,
+ auth: {
+        user: 'noreply@educationmandal.com',
+        pass: 'If-,Xb9@T8?,'
+    }
+});
+
+const sendmail=transporter;
 
 router.get('/',(req,res)=>{
     webname.find({userid:"606de2f6a970be4e18088d9e"},(err,result)=>{
@@ -18,20 +33,29 @@ router.post('/register',(req,res)=>{
                 res.send({message:"Email already Register!",result:false})
             }
             else{
+
+                let Password=uuid().slice(5)
                 
                 const registeruser=new Login({
                     name:req.body.name,
                     discription:req.body.discription,
                     email:req.body.email,
-                    password:req.body.password,
+                    password:Password,
                     createdweb:false
                 }).save();
 
                 registeruser.then((r)=>{
-
-                    res.send({message:"Account Created",result:false,id:r.id})
+                    res.send({message:"Account Created",result:true,id:r.id})
                 })
 
+                const mailOptions = {
+                    from: 'noreply@educationmandal.com', 
+                    to: req.body.email, 
+                    subject: 'Login Pass:-', 
+                    html: `<h3>Password:- ${Password}</h3>`
+                  };
+
+                sendmail.sendMail(mailOptions, function (err, info) {});
             }
         }
         else{
@@ -51,9 +75,10 @@ router.post('/login',(req,res)=>{
                 if(!err)
                 {
                     if(check.length)
-                    {res.send({message:"Login Successful",result:true,id:check[0].id,createdweb:check[0].createdweb})}
+                    { res.send({message:"Login Successful",result:true,id:check[0].id,createdweb:check[0].createdweb})}
                     else
-                    {res.send({message:"Password Not Match",result:false})}
+                    {       res.status(200)
+                        res.send({message:"Password Not Match",result:false})}
                 }
                 })
             }
@@ -62,6 +87,7 @@ router.post('/login',(req,res)=>{
             }
         }
         else{
+            console.log(err)            
             res.send({message:"please try after sometime!",err:err,result:false})
         }
 
