@@ -2,7 +2,8 @@ const express=require('express');
 const Login=require('./module/schema');
 const router=express.Router();
 const webname=require('./module/webname');
-const uuid=require("uniqid")
+const uuid=require("uniqid");
+require('dotenv/config');
 
 var nodemailer = require('nodemailer');
 
@@ -12,17 +13,18 @@ var transporter = nodemailer.createTransport({
     secure: true,
  auth: {
         user: 'noreply@educationmandal.com',
-        pass: 'If-,Xb9@T8?,'
+        pass: process.env.PASS
     }
 });
 
 const sendmail=transporter;
 
-router.get('/',(req,res)=>{
-    webname.find({userid:"606de2f6a970be4e18088d9e"},(err,result)=>{
-        res.send(result)
-    })
-})
+// router.get('/',(req,res)=>{
+//     webname.find({userid:"606de2f6a970be4e18088d9e"},(err,result)=>{
+        
+//         res.send(result)
+//     })
+// })
 
 router.post('/register',(req,res)=>{
 
@@ -133,6 +135,21 @@ router.post('/registerwebname',(req,res)=>{
 
 })
 
+
+router.get('/getnameofpage/:id',(req,res)=>{
+
+    webname.find({userid:req.params.id},(err,r)=>{
+        if(!err)
+        {
+            res.send(r[0].webname)
+        }
+        else
+        {
+            res.send(err)
+        }
+    })
+})
+
 router.post('/Updateapp',(req,res)=>{
     
     webname.findOneAndUpdate({userid:req.body.id},{listid:req.body.datalist},(err,re)=>{
@@ -174,28 +191,7 @@ router.post('/DisplayApp',(req,res)=>{
     })
 })
 
-router.post('/DisplayApp',(req,res)=>{
-    
-    webname.find({webname:req.body.name},(err,re)=>{
-        if(!err)
-        {   
-            let data=[]
-            if(re.length)
-            {
-                data=re[0].listid
-            }
-            
-            res.send({message:"Website Updated!",result:true,re:data})
-        }
-        else
-        {
-            res.send({message:"Try Again After Sometime!",result:false})
-        }
-    })
-    .catch((err)=>{
-            res.send(err)
-    })
-})
+
 
 router.post('/dashboardweb',(req,res)=>{
     

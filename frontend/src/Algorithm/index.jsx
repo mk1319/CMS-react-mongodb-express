@@ -19,7 +19,7 @@ function LoadAll(props) {
 
   useEffect(() => {
     axios
-      .post("http://localhost:5000/access/DisplayApp", {
+      .post("/api/access/DisplayApp", {
         name: props.match.params.name,
       })
       .then((res) => {

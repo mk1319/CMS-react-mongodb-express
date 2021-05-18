@@ -57,7 +57,7 @@ export default function Home() {
     e.preventDefault();
     if(visible)
     {
-      axios.post('http://localhost:5000/access/login',{
+      axios.post('/api/access/login',{
         email:values.email,
         password:values.password
       })
@@ -78,10 +78,10 @@ export default function Home() {
             
             if(res.data.createdweb)
             {
-              window.location.href="http://localhost:3000/Dashboard"
+              window.location.href="/Dashboard"
             }
             else{
-              window.location.href="http://localhost:3000/Discription"
+              window.location.href="/Discription"
             }
           
           
@@ -97,7 +97,7 @@ export default function Home() {
     }
     else
     {
-      axios.post('http://localhost:5000/access/register',{
+      axios.post('/api/access/register',{
         email:values.email,
         name:values.name,
         discription:values.discription
@@ -111,7 +111,7 @@ export default function Home() {
           setValues((preState)=>({...preState,msg:res.data.message,email:"",name:"",discription:""}))
 
           setTimeout(()=>{
-            window.location.href="http://localhost:3000/"
+            window.location.href="/"
           },300)  
 
         }

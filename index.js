@@ -5,6 +5,7 @@ const bodyparser=require('body-parser').json();
 const access=require('./data/access');
 require('dotenv/config');
 const app=express();
+const path=require('path');
 /*
 name:
 email:
@@ -21,14 +22,18 @@ mongoose.connect(process.env.DB_CONNECT,{
     useUnifiedTopology:true
 },()=>console.log("connected"))
 
-app.use('/access',access)
+app.use('/api/access',access)
 
 
-app.get('/',(req,res)=>{
+if(process.env.NODE_ENV==='production'){
 
-    res.send("Hello world")
+    app.use(express.static('frontend/build'))
 
-})
+    app.get('*',(req,res)=>{
+
+        res.sendFile(path.resolve(__dirname,'frontend','build','index.html'))
+    })
+}
 
 
-app.listen(5000,()=>{})
+app.listen(process.env.PORT|| 5000,()=>{})

@@ -83,7 +83,7 @@ export default function AllComponent() {
     function addCompoenet(e)
     {
 
-    axios.post('http://localhost:5000/access/addcomponent',{id:jwt.decode(localStorage.getItem('UserLogin'),"WEB_X").id,data:JSON.stringify(Data[e])})
+    axios.post('/api/access/addcomponent',{id:jwt.decode(localStorage.getItem('UserLogin'),"WEB_X").id,data:JSON.stringify(Data[e])})
       .then((res)=>{
           alert(res.data.message)
       })

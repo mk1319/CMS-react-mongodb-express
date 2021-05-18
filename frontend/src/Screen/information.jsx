@@ -35,7 +35,7 @@ export default function Information() {
       return false
     }
 
-    axios.get(`http://localhost:5000/access/check/${value}`)
+    axios.get(`/api/access/check/${value}`)
     .then((res)=>{
       if(res.data.result)
       {
@@ -60,7 +60,7 @@ export default function Information() {
 
     if(status && Info.name.length >3)
     {
-      axios.post('http://localhost:5000/access/registerwebname',{
+      axios.post('/api/access/registerwebname',{
         name:Info.name,
         id:id
       })
@@ -70,7 +70,7 @@ export default function Information() {
         {
           setInfo((preState)=>({...preState,message:res.data.message}))
           setTimeout((res)=>{
-                window.location.href="http://localhost:3000/Dashboard"
+                window.location.href="/Dashboard"
           })
         }
 
@@ -90,7 +90,7 @@ export default function Information() {
     <Container>
       <div>
         <p>
-          Register your domain:- <p style={{color:'blue'}}>http://localhost:3000/web/{"{YOUR_DOMAIN_HERE}"}</p>
+          Register your domain:- <p style={{color:'blue'}}>http://Domain_Name/web/{"{YOUR_DOMAIN_HERE}"}</p>
         </p>
         <Form>
           <form autoComplete="off" className="form" onSubmit={(e)=>{e.preventDefault()}}>

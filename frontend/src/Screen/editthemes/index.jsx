@@ -66,6 +66,7 @@ export default function TheameEdit() {
   const [Data,setData]=useState([])
   const [message, setmessage] = useState("")
   const [loadfinish, setloadfinish] = useState(false)
+  const [WebName, setWebName] = useState("")
   
   const setid=(id)=>{
     setId(id)
@@ -77,10 +78,16 @@ export default function TheameEdit() {
       jwt.decode(localStorage.getItem('UserLogin'),"WEB_X").id
     )
 
+    axios.get(`/api/access/getnameofpage/${jwt.decode(localStorage.getItem('UserLogin'),"WEB_X").id}`)
+    .then((r)=>{
+        setWebName(r.data)
+    })
+
+
   if(!loadfinish)
   {
     
-    axios.post('http://localhost:5000/access/dashboardweb',{id:jwt.decode(localStorage.getItem('UserLogin'),"WEB_X").id})
+    axios.post('/api/access/dashboardweb',{id:jwt.decode(localStorage.getItem('UserLogin'),"WEB_X").id})
     .then((res)=>{
       if(res.data.result)
       {
@@ -118,7 +125,7 @@ export default function TheameEdit() {
     });
 
     axios
-      .post("http://localhost:5000/access/Updateapp", {
+      .post("/api/access/Updateapp", {
         id: userid,
         datalist: Datalist,
       })
@@ -144,10 +151,11 @@ export default function TheameEdit() {
           <h3>Webex</h3>
         </div>
         <div>
-          <button onClick={()=>window.location.href="http://localhost:3000/AllComponent"}>Add Component</button>
+          <button onClick={()=>window.location.href="/AllComponent"}>Add Component</button>
         </div>
         <div>
           <label style={{color:'red'}}>{message}</label>
+          <button onClick={()=>{window.location=`/web/${WebName}`}}>View Website</button>
           <button onClick={()=>{UpdateWebApp()}}>Save</button>
         </div>
 
@@ -159,7 +167,7 @@ export default function TheameEdit() {
               </div>
               <li onClick={()=>{
                 autent.singout()
-                window.location.href="http://localhost:3000/"
+                window.location.href="/"
               }}>Signout</li>
           </div>
           <div className="main">
