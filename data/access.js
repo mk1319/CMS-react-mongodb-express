@@ -8,11 +8,11 @@ require('dotenv/config');
 var nodemailer = require('nodemailer');
 
 var transporter = nodemailer.createTransport({
-    host: "educationmandal.com",
+    host: "##",
     port: 465,
     secure: true,
  auth: {
-        user: 'noreply@educationmandal.com',
+        user: process.env.EMAIL_USER,
         pass: process.env.PASS
     }
 });
