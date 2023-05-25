@@ -25,7 +25,7 @@ mongoose.connect(process.env.DB_CONNECT,{
 app.use('/api/access',access)
 
 
-if(process.env.NODE_ENV==='production'){
+// if(process.env.NODE_ENV==='production'){
 
     app.use(express.static('frontend/build'))
 
@@ -33,7 +33,7 @@ if(process.env.NODE_ENV==='production'){
 
         res.sendFile(path.resolve(__dirname,'frontend','build','index.html'))
     })
-}
+// }
 
 
-app.listen(process.env.PORT|| 5000,()=>{})
+app.listen(process.env.PORT|| 5000,()=>{}) 

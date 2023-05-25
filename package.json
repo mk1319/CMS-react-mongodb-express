@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "client-install":"npm install --prefix frontend",
+    "client-install": "npm install --prefix frontend",
     "app": "cd frontend &&  npm run start",
-    "server":"nodemon index.js",
+    "server": "nodemon index.js",
     "start": "node index.js",
-    "client":"npm start --prefix frontend",
+    "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "repository": {
     "type": "git",
